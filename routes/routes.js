@@ -1,18 +1,16 @@
-let express = require("express");
-let mongoose = require("mongoose");
-let cheerio = require("cheerio");
-let request = require("request");
+const express = require("express");
+const mongoose = require("mongoose");
+const cheerio = require("cheerio");
+const request = require("request");
 
 mongoose.Promise = Promise;
 
-// Requiring our Note and Article models
 let Note = require("../models/Note.js");
 let Article = require("../models/Article.js");
 
-// Routes
 module.exports = function(app) {
 
-    // Simple index route
+    // get the index page
     app.get("/", function(req, res) {
         res.render("index", {
             articles: []
@@ -23,19 +21,21 @@ module.exports = function(app) {
         let articleId = 0;
 
         // First, we grab the body of the html with request
-        let hbsObject = request("https://www.nytimes.com/section/technology", function(error, response, html) {
+        // let hbsObject = request('https://www.nytimes.com/section/us', function(error, response, html) {
+        let hbsObject = request('https://www.huffingtonpost.com/section/tv', function(error, response, html) {
+
 
             // Then, we load that into cheerio and save it to $ for a shorthand selector
             let $ = cheerio.load(html);
 
             let results = [];
             // Now, we grab every article tag, and do the following:
-            $("div.story-body").each(function(i, element) {
+            $('div.card__headline').each(function(i, element) {
                 // Save an empty result object
                 let result = {};
 
                 result.articleId = ++articleId;
-                result.title = $(this).find("h2").text();
+                result.title = $(this).find("a").text();
                 result.link = $(this).find("a").attr("href");
                 if (result.title != '' && result.link != '' && result.title != undefined && result.link != undefined)
                     results.push(result);
