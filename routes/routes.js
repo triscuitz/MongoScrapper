@@ -21,7 +21,6 @@ module.exports = function(app) {
         let articleId = 0;
 
         // First, we grab the body of the html with request
-        // let hbsObject = request('https://www.nytimes.com/section/us', function(error, response, html) {
         let hbsObject = request('https://www.huffingtonpost.com/section/tv', function(error, response, html) {
 
 

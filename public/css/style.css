@@ -1,0 +1,20 @@
+.jumbotron {
+  background-color: black;
+  color: #23BD98;
+}
+
+.HPlogo {
+  width: 650px;
+}
+
+a:link {
+  color: #23BD98;
+}
+
+a:visited {
+  color: #424242;
+}
+
+a:hover {
+  color: black;
+}
